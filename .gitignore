@@ -1,0 +1,5 @@
+node_modules/
+videos/channels/
+videos/thumbnails/
+cookies.txt
+native-host/yt_sub.json

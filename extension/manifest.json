@@ -1,0 +1,46 @@
+{
+  "manifest_version": 2,
+  "name": "TubeStash",
+  "version": "2.1.0",
+  "description": "Stash YouTube videos locally — polls your subscriptions and downloads new videos for offline viewing.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "tubestash@example.com"
+    }
+  },
+  "permissions": [
+    "alarms",
+    "storage",
+    "tabs",
+    "downloads",
+    "cookies",
+    "https://www.youtube.com/*",
+    "https://sponsor.ajay.app/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": {
+      "48": "icons/icon-48.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "content_scripts": [{
+    "matches": ["*://www.youtube.com/*"],
+    "js": ["yt-swap.js"],
+    "css": ["yt-swap.css"],
+    "run_at": "document_idle"
+  }],
+  "web_accessible_resources": [
+    "native-host/host.js"
+  ]
+}

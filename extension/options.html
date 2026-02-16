@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TubeStash — Options</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #1a1a1a; color: #e0e0e0; padding: 30px;
+  max-width: 600px; margin: 0 auto;
+}
+h1 { font-size: 22px; margin-bottom: 20px; }
+h2 { font-size: 16px; margin-bottom: 10px; color: #ccc; }
+label { display: block; font-size: 13px; color: #aaa; margin-bottom: 4px; }
+input {
+  width: 100%; padding: 8px 10px; border: 1px solid #444;
+  border-radius: 4px; background: #272727; color: #f1f1f1;
+  font-size: 14px; font-family: inherit; margin-bottom: 16px;
+}
+.row { display: flex; gap: 16px; }
+.row > div { flex: 1; }
+button {
+  padding: 8px 20px; border: none; border-radius: 4px;
+  font-size: 14px; cursor: pointer; margin-right: 8px;
+}
+.btn-save { background: #2962ff; color: #fff; }
+.btn-save:hover { background: #1e4fcc; }
+.btn-sync { background: #333; color: #e0e0e0; }
+.btn-sync:hover { background: #444; }
+.btn-sync:disabled { opacity: 0.5; cursor: default; }
+.btn-clear { background: #c62828; color: #fff; }
+.btn-clear:hover { background: #a01c1c; }
+.btn-clear:disabled { opacity: 0.5; cursor: default; }
+#status { display: inline-block; margin-left: 8px; font-size: 13px; color: #4caf50; }
+
+.section { margin-bottom: 24px; }
+
+.sync-info { font-size: 12px; color: #888; margin-bottom: 10px; }
+.sync-info.error { color: #f44336; }
+
+.channel-list {
+  max-height: 300px; overflow-y: auto;
+  border: 1px solid #333; border-radius: 4px;
+  background: #222; margin-bottom: 12px;
+}
+.channel-list:empty::after {
+  content: 'No channels synced yet';
+  display: block; padding: 20px; text-align: center;
+  color: #666; font-size: 13px;
+}
+.channel-item {
+  padding: 6px 12px; font-size: 13px;
+  border-bottom: 1px solid #2a2a2a;
+}
+.channel-item:last-child { border-bottom: none; }
+.channel-item .ch-name { color: #e0e0e0; }
+.channel-item .ch-id { color: #666; font-size: 11px; margin-left: 8px; font-family: monospace; }
+
+/* SponsorBlock settings */
+.sb-grid { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; align-items: center; margin-bottom: 16px; }
+.sb-grid .sb-label { font-size: 13px; color: #ccc; }
+.sb-grid select {
+  padding: 5px 8px; border: 1px solid #444; border-radius: 4px;
+  background: #272727; color: #f1f1f1; font-size: 13px; font-family: inherit;
+}
+</style>
+</head>
+<body>
+<h1>TubeStash Options</h1>
+
+<div class="section">
+  <div class="row">
+    <div>
+      <label for="poll-interval">Poll Interval (minutes)</label>
+      <input type="number" id="poll-interval" min="5" max="1440" value="30">
+    </div>
+    <div>
+      <label for="max-age">Max Video Age (days)</label>
+      <input type="number" id="max-age" min="1" max="90" value="7">
+    </div>
+    <div>
+      <label for="concurrency">Download Concurrency</label>
+      <input type="number" id="concurrency" min="1" max="4" value="2">
+    </div>
+  </div>
+  <button class="btn-save" id="save">Save</button>
+  <span id="status"></span>
+</div>
+
+<div class="section">
+  <h2>Subscriptions</h2>
+  <div class="sync-info" id="sync-info">Checking sync status...</div>
+  <div class="channel-list" id="channel-list"></div>
+  <button class="btn-sync" id="sync-btn">Sync Now</button>
+</div>
+
+<div class="section">
+  <h2>SponsorBlock</h2>
+  <div class="sb-grid">
+    <span class="sb-label">Sponsor</span>
+    <select id="sb-sponsor"><option value="skip">Skip</option><option value="mute">Mute</option><option value="highlight">Highlight only</option><option value="off">Off</option></select>
+
+    <span class="sb-label">Self-Promotion</span>
+    <select id="sb-selfpromo"><option value="skip">Skip</option><option value="mute">Mute</option><option value="highlight">Highlight only</option><option value="off">Off</option></select>
+
+    <span class="sb-label">Interaction Reminder</span>
+    <select id="sb-interaction"><option value="skip">Skip</option><option value="mute">Mute</option><option value="highlight">Highlight only</option><option value="off">Off</option></select>
+
+    <span class="sb-label">Intro</span>
+    <select id="sb-intro"><option value="skip">Skip</option><option value="mute">Mute</option><option value="highlight">Highlight only</option><option value="off">Off</option></select>
+
+    <span class="sb-label">Outro</span>
+    <select id="sb-outro"><option value="skip">Skip</option><option value="mute">Mute</option><option value="highlight">Highlight only</option><option value="off">Off</option></select>
+
+    <span class="sb-label">Preview/Recap</span>
+    <select id="sb-preview"><option value="skip">Skip</option><option value="mute">Mute</option><option value="highlight">Highlight only</option><option value="off">Off</option></select>
+
+    <span class="sb-label">Non-Music (in music videos)</span>
+    <select id="sb-music_offtopic"><option value="skip">Skip</option><option value="mute">Mute</option><option value="highlight">Highlight only</option><option value="off">Off</option></select>
+
+    <span class="sb-label">Filler</span>
+    <select id="sb-filler"><option value="skip">Skip</option><option value="mute">Mute</option><option value="highlight">Highlight only</option><option value="off">Off</option></select>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Danger Zone</h2>
+  <button class="btn-clear" id="btn-clear">Clear &amp; Re-download</button>
+</div>
+
+<script src="options.js"></script>
+</body>
+</html>

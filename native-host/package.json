@@ -1,0 +1,9 @@
+{
+  "name": "yt-sub-native-host",
+  "version": "2.0.0",
+  "description": "Native messaging host for YT Sub extension",
+  "private": true,
+  "scripts": {
+    "install-host": "node -e \"require('os').platform()==='win32'?require('child_process').execSync('install.bat',{stdio:'inherit',cwd:__dirname}):require('child_process').execSync('bash install.sh',{stdio:'inherit',cwd:__dirname})\""
+  }
+}
