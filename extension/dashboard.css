@@ -218,7 +218,7 @@ a { color: #3ea6ff; text-decoration: none; }
 /* Seek bar — YouTube-style: full-width thin bar at top of controls */
 #seek-bar {
   position: relative; height: 3px; background: rgba(255,255,255,0.2);
-  cursor: pointer; margin: 0;
+  cursor: pointer; margin: 0 7px;
   transition: height 0.15s cubic-bezier(0.4,0,0.2,1);
 }
 #player-controls:hover #seek-bar,
@@ -240,7 +240,7 @@ a { color: #3ea6ff; text-decoration: none; }
   transition: transform 0.15s cubic-bezier(0.4,0,0.2,1);
   pointer-events: none; z-index: 2;
 }
-#player-controls:hover #seek-thumb,
+#player-wrap.controls-visible #seek-thumb,
 #seek-bar.dragging #seek-thumb { transform: translate(-50%, -50%) scale(1); }
 
 /* Controls row */
