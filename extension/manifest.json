@@ -34,12 +34,6 @@
     "48": "icons/icon-48.png",
     "96": "icons/icon-96.png"
   },
-  "content_scripts": [{
-    "matches": ["*://www.youtube.com/*"],
-    "js": ["yt-swap.js"],
-    "css": ["yt-swap.css"],
-    "run_at": "document_idle"
-  }],
   "web_accessible_resources": [
     "native-host/host.js"
   ]

@@ -241,14 +241,8 @@ async function enqueueDownload(videoInfo) {
     channel_name: videoInfo.channel_name || '',
     published_at: videoInfo.published_at || null,
     is_short: isShort,
-    status: isShort ? 'done' : 'queued',
+    status: 'queued',
   });
-
-  if (isShort) {
-    console.log(`[tubestash] Skipping Short: ${videoInfo.id} (${videoInfo.title})`);
-    broadcastToUI({ type: 'queue-updated' });
-    return;
-  }
 
   if (!downloadQueue.some(q => q.videoId === videoInfo.id)) {
     downloadQueue.push({ videoId: videoInfo.id, published_at: videoInfo.published_at || '' });

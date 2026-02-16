@@ -82,10 +82,10 @@ async function loadVideos() {
   readFiltersFromUrl();
   render();
 
-  // Auto-open video if ?watch= is in the URL
+  // Auto-open video if ?watch= is in the URL (only on first load, not re-renders)
   const params = new URLSearchParams(location.search);
   const watchId = params.get('watch');
-  if (watchId && videos.find((v) => v.id === watchId && v.status === 'done')) {
+  if (watchId && watchView.style.display === 'none' && videos.find((v) => v.id === watchId && v.status === 'done')) {
     playVideo(watchId);
   }
 }
@@ -310,7 +310,7 @@ player.addEventListener('pause', () => {
 function updateTimeDisplay() {
   const cur = player.currentTime || 0;
   const dur = player.duration || 0;
-  ctrlTime.textContent = formatDuration(Math.floor(cur)) + ' / ' + formatDuration(Math.floor(dur));
+  ctrlTime.textContent = formatDuration(cur, '0:00') + ' / ' + formatDuration(dur, '0:00');
   if (dur) {
     const pct = (cur / dur) * 100;
     seekProgress.style.width = pct + '%';
@@ -669,8 +669,9 @@ function mediaUrl(filePath) {
   return MEDIA_BASE + encodeURI(stripped);
 }
 
-function formatDuration(s) {
-  if (!s) return '';
+function formatDuration(s, fallback) {
+  if (!s && s !== 0) return fallback !== undefined ? fallback : '';
+  s = Math.floor(s);
   const h = Math.floor(s / 3600);
   const m = Math.floor((s % 3600) / 60);
   const sec = s % 60;
